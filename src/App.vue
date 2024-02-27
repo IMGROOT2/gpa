@@ -166,8 +166,8 @@ function getGPA(qualityPoints) {
 const relevantCourses = computed(() => {
   return courses.value
     .map(({ courseId, average, credits }) => ({
-      average,
-      credits,
+      average: Math.min(100, Math.max(0, average || 100)),
+      credits: Math.max(0, average || 0.5),
       ...rrisdCourses.find((a) => a.i === courseId)
     }))
     .filter((el) => el.g)
@@ -181,6 +181,7 @@ const weightedGPA = computed(() => {
 });
 
 function calculateWeightedHonorPoints(average, advanced) {
+  if (average < 70) return 0; // doesn't matter if it's advanced
   const maxPoints = advanced ? 6 : 5;
   const deductedPoints = (100 - average) / 10;
   return maxPoints - deductedPoints;
