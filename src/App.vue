@@ -175,14 +175,28 @@ const relevantCourses = computed(() => {
 
 const weightedGPA = computed(() => {
   const qualityPoints = relevantCourses.value.map(
-    (el) => ((el.w ? 6 : 5) - (100 - el.average) / 10) * el.credits
+    (el) => calculateWeightedHonorPoints(el.average, el.w) * el.credits
   )
   return getGPA(qualityPoints)
-})
+});
+
+function calculateWeightedHonorPoints(average, advanced) {
+  const maxPoints = advanced ? 6 : 5;
+  const deductedPoints = (100 - average) / 10;
+  return maxPoints - deductedPoints;
+}
+
+function calculateUnweightedHonorPoints(average) {
+  // just hardcoding it the algorithm doesn't make sense mathematically
+  if (average >= 90) return 4;
+  else if (average >= 80) return 3;
+  else if (average >= 70) return 2;
+  else return 0;
+}
 
 const unweightedGPA = computed(() => {
   const qualityPoints = relevantCourses.value.map(
-    (el) => (4 - Math.floor((100 - el.average) / 10)) * el.credits
+    (el) => calculateUnweightedHonorPoints(el.average) * el.credits
   )
   return getGPA(qualityPoints)
 })
