@@ -166,8 +166,8 @@ function getGPA(qualityPoints) {
 const relevantCourses = computed(() => {
   return courses.value
     .map(({ courseId, average, credits }) => ({
-      average: Math.min(100, Math.max(0, average || 100)),
-      credits: Math.max(0, average || 0.5),
+      average: Math.min(100, Math.max(0, Number.isNaN(average) ? 100 : 100)),
+      credits: Math.max(0, credits || 0.5),
       ...rrisdCourses.find((a) => a.i === courseId)
     }))
     .filter((el) => el.g)
