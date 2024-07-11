@@ -12,7 +12,7 @@
               <h3 class="mb-3 text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
                 RRISD GPA Calculator
               </h3>
-              <p class="text-md font-semibold text-gray-700 dark:text-white mb-5 lg:mb-8">
+              <p class="text-md font-semibold text-gray-700 dark:text-white">
                 Calculate and re-calculate your GPA with ease!
               </p>
             </div>
@@ -65,6 +65,24 @@
               </div>
             </div>
           </div>
+
+          <div class="mb-5 lg:mb-8 max-w-xs">
+            <label
+              for="input-graduation-year"
+              class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+              >Graduation Year</label
+            >
+            <p class="mb-1 text-xs text-gray-500 dark:text-gray-400">
+              Needed for the Class of 2028 GPA class changes.
+            </p>
+            <input
+              type="number"
+              id="input-graduation-year"
+              class="w-16 text-center text-gray-900 dark:text-white bg-gray-400/25 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              v-model.number="graduationYear"
+            />
+          </div>
+
           <div
             class="justify-between items-center pt-0 space-y-4 sm:flex sm:space-y-0 mb-5 lg:mb-8"
           >
@@ -74,10 +92,10 @@
                 <tbody>
                   <Class
                     v-for="(course, i) in courses"
-                    :course-id="course.courseId"
+                    :course="{ courseId: course.courseId, ...processedCourses[course.courseId] }"
                     v-model:average="course.average"
                     v-model:credits="course.credits"
-                    :key="i"
+                    :key="course.courseId"
                     @select-course="(top, left) => onSelectCourse(i, top, left)"
                     @remove-class="courses.splice(i, 1) && saveCourses()"
                     @input="saveCourses"
@@ -132,7 +150,7 @@
 import Class from './components/Class.vue'
 import TableHead from './components/TableHead.vue'
 import Footer from './components/Footer.vue'
-import { onMounted, onUnmounted, ref, computed } from 'vue'
+import { onMounted, onUnmounted, ref, computed, watch } from 'vue'
 import SubjectSelectDropdown from './components/SubjectSelectDropdown.vue'
 import rrisdCourses from './assets/rrisd-courses.json'
 
@@ -152,6 +170,12 @@ const courses = ref(
   ]
 )
 
+const graduationYear = ref(parseInt(localStorage.getItem('graduation-year') ?? 2027))
+
+watch(graduationYear, (newYear) => {
+  localStorage.setItem('graduation-year', newYear.toString())
+})
+
 function saveCourses() {
   localStorage.setItem('saved-courses', JSON.stringify(courses.value))
 }
@@ -163,13 +187,43 @@ function getGPA(qualityPoints) {
   )
 }
 
+// apply the graduation year filters
+const processedCourses = computed(() =>
+  Object.fromEntries(
+    Object.entries(rrisdCourses).map(([id, course]) => {
+      if (course.gpa) {
+        // the user isn't eligible for this to be a GPA course
+        if (
+          (course.firstYear && graduationYear.value < course.firstYear) ||
+          (course.lastYear && graduationYear.value > course.lastYear)
+        ) {
+          return [
+            id,
+            {
+              ...course,
+              gpa: false,
+              weighted: false,
+              notEligible: true
+            }
+          ]
+        } else {
+          return [id, course]
+        }
+      } else {
+        // no changes for non-gpa courses
+        return [id, course]
+      }
+    })
+  )
+)
+
 const relevantCourses = computed(() => {
   return courses.value
     .map(({ courseId, average, credits }) => ({
       courseId,
       average: Math.min(100, Math.max(0, Number.isNaN(average) ? 100 : average)),
       credits: Math.max(0, credits || 0.5),
-      ...rrisdCourses[courseId]
+      ...processedCourses.value[courseId]
     }))
     .filter((el) => el.gpa)
 })
@@ -179,21 +233,21 @@ const weightedGPA = computed(() => {
     (el) => calculateWeightedHonorPoints(el.average, el.weighted) * el.credits
   )
   return getGPA(qualityPoints)
-});
+})
 
 function calculateWeightedHonorPoints(average, advanced) {
-  if (average < 70) return 0; // doesn't matter if it's advanced
-  const maxPoints = advanced ? 6 : 5;
-  const deductedPoints = (100 - average) / 10;
-  return maxPoints - deductedPoints;
+  if (average < 70) return 0 // doesn't matter if it's advanced
+  const maxPoints = advanced ? 6 : 5
+  const deductedPoints = (100 - average) / 10
+  return maxPoints - deductedPoints
 }
 
 function calculateUnweightedHonorPoints(average) {
   // just hardcoding it the algorithm doesn't make sense mathematically
-  if (average >= 90) return 4;
-  else if (average >= 80) return 3;
-  else if (average >= 70) return 2;
-  else return 0;
+  if (average >= 90) return 4
+  else if (average >= 80) return 3
+  else if (average >= 70) return 2
+  else return 0
 }
 
 const unweightedGPA = computed(() => {
@@ -215,11 +269,14 @@ function onDocumentClick() {
 function onStorage(e) {
   if (e.key === 'saved-courses') {
     courses.value = JSON.parse(e.newValue)
+  } else if (e.key === 'graduation-year') {
+    graduationYear.value = parseInt(e.newValue)
   }
 }
 
 function onDropdownSelected(courseId) {
   dropdownOptions.value.hidden = true
+  console.log(courses.value, currentSelectingCourse.value)
   courses.value[currentSelectingCourse.value].courseId = courseId
   currentSelectingCourse.value = -1
   saveCourses()

@@ -44,7 +44,7 @@
           <span>{{ result.name }}</span>
           <span class="text-gray-500 dark:text-gray-400 text-xs">
             #{{ result.courseId }}
-            <span v-if="result.annotation"> &bull; {{ result.annotation  }}</span>
+            <span v-if="result.annotation"> &bull; {{ result.annotation }}</span>
           </span>
         </button>
       </li>
@@ -76,7 +76,7 @@ const searchInputValue = ref('')
 const displayedResults = ref([])
 let searchTimeout = -1
 
-const courses = Object.entries(rrisdCoursesData).map(([k, v]) => ({ courseId: k, ...v })); 
+const courses = Object.entries(rrisdCoursesData).map(([k, v]) => ({ courseId: k, ...v }))
 
 const fuse = new Fuse(courses, {
   keys: ['name', 'courseId'],
@@ -88,11 +88,11 @@ function search() {
   displayedResults.value = results.map((el) => el.item)
 
   if (searchInputValue.value === '') {
-    displayedResults.value = courses;
+    displayedResults.value = courses
   }
 }
 
-displayedResults.value = courses;
+displayedResults.value = courses
 
 watch(searchInputValue, () => {
   clearTimeout(searchTimeout)

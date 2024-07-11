@@ -15,9 +15,9 @@ const DOC_PATH_RE = /^\/document\/d\/([\w-]+)\//;
   (
     [
       \w\s // letters, numbers, spaces
-      \(\) // parens
-      \/ // slash
-      ,'\.:&- // random symbols
+      () // parens
+      / // slash
+      ,'.:&- // random symbols
     ]+
   )
     
@@ -26,7 +26,7 @@ const DOC_PATH_RE = /^\/document\/d\/([\w-]+)\//;
     [\dA-Z]+ // numbers and capital letters
     // zero or more additional course IDs
     (?:
-      \/
+      /
       [\dA-Z]+
     )* 
   )
@@ -43,13 +43,14 @@ const DOC_PATH_RE = /^\/document\/d\/([\w-]+)\//;
   // Pg: or Pg.
   // there is only ONE class that uses Pg. instead of Pg: (why???)
   // Language & Literature I (TAG IB) 1136
-  Pg[\.:]
+  Pg[.:]
   \s{0,2} // anywhere from 0 to 2 spaces
   \d+ // actual page number
   (?:, \d+)? // sometimes there's two page numbers
 */
-const INDEX_COURSE_RE = /^([\w\s\(\)\/,'\.:&-]+) ([\dA-Z]+(?:\/[\dA-Z]+)*)(?: ?\(([\w\s]+)\))?\s+Pg[\.:]\s{0,2}\d+(?:, \d+)?$/;
-const RIC_COURSE_RE =              /^([\*~^=]*).*?([\dA-Z]+(?:\/[\dA-Z]+)*)(?: ?\([\w\s]+\))?$/;
+const INDEX_COURSE_RE = /^([\w\s()/,'.:&-]+) ([\dA-Z]+(?:\/[\dA-Z]+)*)(?: ?\(([\w\s]+)\))?\s+Pg[.:]\s{0,2}\d+(?:, \d+)?$/;
+const RIC_COURSE_RE =              /^([*~^=]*).*?([\dA-Z]+(?:\/[\dA-Z]+)*)(?: ?\([\w\s]+\))?$/;
+const STYLE_COLOR_RE = /color:\s*#([a-zA-Z0-9]+)/;
 
 const unzip = promisify(yauzl.fromBuffer);
 
@@ -207,6 +208,19 @@ program
             const gpa = modifiers.includes("*");
             const weighted = modifiers.includes("^");
 
+            // first/last year this counts to the gpa
+            let lastYear = undefined;
+            let firstYear = undefined;
+
+            // red = only GPA for >=2028
+            // blue = only GPA for <=2027
+            const style = currentEl.firstChild?.attribs?.style?.match(STYLE_COLOR_RE);
+            if (style) {
+              const color = style[1];
+              if (color === "ff0000") firstYear = 2028;
+              else if (color === "0000ff") lastYear = 2027;
+            }
+
             // Some classes on here are not RRISD gpa classes
             if (gpa) {
               // add an entry for each id 
@@ -215,6 +229,8 @@ program
                 if (course) {
                   course.gpa = gpa;
                   course.weighted = weighted;
+                  course.firstYear = firstYear;
+                  course.lastYear = lastYear;
                 } else {
                   // This pretty much happens for level III IB of all of the languages
                   console.warn(`WARNING: Unknown course "${text}"`);
