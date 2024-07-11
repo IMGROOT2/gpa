@@ -35,13 +35,17 @@
       </div>
     </div>
     <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
-      <li v-for="result in displayedResults" :key="result.i">
+      <li v-for="result in displayedResults" :key="result.courseId">
         <button
           type="button"
-          class="block py-1 px-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-left rounded-md"
-          @click="$emit('selected', result.i)"
+          class="flex flex-col py-1 px-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-left rounded-md"
+          @click="$emit('selected', result.courseId)"
         >
-          {{ result.n }}
+          <span>{{ result.name }}</span>
+          <span class="text-gray-500 dark:text-gray-400 text-xs">
+            #{{ result.courseId }}
+            <span v-if="result.annotation"> &bull; {{ result.annotation  }}</span>
+          </span>
         </button>
       </li>
     </ul>
@@ -63,16 +67,19 @@ const props = defineProps({
 
 const searchInputValue = ref('')
 /** @type {import("vue").Ref<{
-    n: string;
-    i: string;
-    w: boolean;
-    g: boolean;
+    name: string;
+    courseId: string;
+    weighted: boolean;
+    gpa: boolean;
+    annotation: string;
 }[]>} */
 const displayedResults = ref([])
 let searchTimeout = -1
 
-const fuse = new Fuse(rrisdCoursesData, {
-  keys: ['n', 'i'], // name and id,
+const courses = Object.entries(rrisdCoursesData).map(([k, v]) => ({ courseId: k, ...v })); 
+
+const fuse = new Fuse(courses, {
+  keys: ['name', 'courseId'],
   threshold: 0.3
 })
 
@@ -81,11 +88,11 @@ function search() {
   displayedResults.value = results.map((el) => el.item)
 
   if (searchInputValue.value === '') {
-    displayedResults.value = rrisdCoursesData
+    displayedResults.value = courses;
   }
 }
 
-displayedResults.value = rrisdCoursesData
+displayedResults.value = courses;
 
 watch(searchInputValue, () => {
   clearTimeout(searchTimeout)

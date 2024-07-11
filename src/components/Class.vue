@@ -3,17 +3,20 @@
 <template>
   <tr
     class="border-b dark:bg-gray-800 dark:border-gray-700 transition-opacity"
-    :class="{ 'opacity-25 hover:opacity-100': !course.g }"
+    :class="{ 'opacity-25 hover:opacity-100': !course.gpa }"
   >
     <th
       scope="row"
       class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
     >
-      {{ course.n }}
+      {{ course.name }}
+
+      <span class="text-gray-500 dark:text-gray-400 ml-2">#{{ courseId }}</span>
+      
       <span
         class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold bg-green-100 text-green-800 rounded-full dark:bg-green-900 dark:text-green-300"
         title="Affects GPA"
-        v-if="course.g"
+        v-if="course.gpa"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +35,7 @@
       <span
         class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold bg-purple-100 text-purple-800 rounded-full dark:bg-purple-900 dark:text-purple-300"
         title="Weighted (6.0)"
-        v-if="course.w"
+        v-if="course.weighted"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +128,7 @@ const dropdownButton = ref()
 
 const emit = defineEmits(['select-course', 'update:average', 'update:credits', 'remove-class'])
 
-const course = computed(() => rrisdCourses.find((el) => el.i === props.courseId))
+const course = computed(() => rrisdCourses[props.courseId])
 
 function onDropdownButtonClick() {
   const boundingBox = dropdownButton.value.getBoundingClientRect()

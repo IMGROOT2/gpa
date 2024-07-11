@@ -166,16 +166,17 @@ function getGPA(qualityPoints) {
 const relevantCourses = computed(() => {
   return courses.value
     .map(({ courseId, average, credits }) => ({
+      courseId,
       average: Math.min(100, Math.max(0, Number.isNaN(average) ? 100 : average)),
       credits: Math.max(0, credits || 0.5),
-      ...rrisdCourses.find((a) => a.i === courseId)
+      ...rrisdCourses[courseId]
     }))
-    .filter((el) => el.g)
+    .filter((el) => el.gpa)
 })
 
 const weightedGPA = computed(() => {
   const qualityPoints = relevantCourses.value.map(
-    (el) => calculateWeightedHonorPoints(el.average, el.w) * el.credits
+    (el) => calculateWeightedHonorPoints(el.average, el.weighted) * el.credits
   )
   return getGPA(qualityPoints)
 });
