@@ -1,8 +1,8 @@
 <template>
   <div
-    class="z-10 bg-white rounded-lg shadow p-1 pb-3 w-60 dark:bg-gray-700 fixed"
+    class="z-10 bg-white rounded-lg shadow p-1 pb-3 w-64 dark:bg-gray-700 fixed"
     :class="{ hidden }"
-    :style="{ top: `${x}px`, left: `${y}px` }"
+    :style="{ top: `${x-50}px`, left: `${y}px` }"
     @click.stop
   >
     <div class="p-3">

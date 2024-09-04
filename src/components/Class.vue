@@ -62,7 +62,7 @@
         ref="dropdownButton"
         type="button"
         @click.stop="onDropdownButtonClick"
-        class="ml-2 flex-shrink-0 inline-flex justify-center w-6 h-6 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white"
+        class="transition-all ml-2 flex-shrink-0 inline-flex justify-center w-6 h-6 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +100,7 @@
         @input="$emit('update:credits', $event.target.valueAsNumber)"
       />
       <span
-        class="inline-flex items-center justify-center w-6 h-6 text-sm font-semibold bg-red-100 text-red-800 hover:bg-red-700 dark:hover:bg-red-800 rounded-full dark:bg-red-900 dark:text-red-300 relative top-[5px] ml-4"
+        class="transition-all inline-flex items-center justify-center w-6 h-6 text-sm font-semibold bg-red-100 text-red-800 hover:bg-red-700 dark:hover:bg-red-800 rounded-full dark:bg-red-900 dark:text-red-300 relative top-[5px] ml-4"
         title="Remove course"
         @click="$emit('remove-class')"
       >

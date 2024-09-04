@@ -1,7 +1,5 @@
-<!-- One or more icons in this file belong to Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-
 <template>
-  <main class="w-full flex items-center justify-center lg:h-screen">
+  <main class="mt-32 w-full flex items-center justify-center lg:h-screen transition-all">
     <div class="overflow-x-hidden w-full mx-auto flex items-center justify-center lg:mt-14">
       <div class="relative p-4 w-full lg:max-w-screen-xl h-full md:h-auto">
         <div
@@ -9,12 +7,12 @@
         >
           <div class="flex flex-row justify-between">
             <div class="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
-              <h3 class="mb-3 text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
+              <h1 class="mb-3 text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
                 RRISD GPA Calculator
-              </h3>
-              <p class="text-md font-semibold text-gray-700 dark:text-white">
+              </h1>
+              <h3 class="text-md font-semibold text-gray-700 dark:text-white">
                 Calculate and re-calculate your GPA with ease!
-              </p>
+              </h3>
             </div>
             <div class="text-right">
               <div>
@@ -70,17 +68,14 @@
             <label
               for="input-graduation-year"
               class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-              >Graduation Year</label
+              >Graduation Year - <span class="mb-1 text-xs text-gray-500 dark:text-gray-400">
+              Needed for <a href="https://communityimpact.com/austin/round-rock/education/2024/07/19/round-rock-isd-to-expand-courses-used-to-calculate-class-rankings/" target="_blank" class="underline hover:text-blue-500 transition-all"> GPA Changes</a>.
+            </span></label
             >
-            <p class="mb-1 text-xs text-gray-500 dark:text-gray-400">
-              Needed for the Class of 2028 GPA class changes.
-            </p>
-            <input
-              type="number"
-              id="input-graduation-year"
-              class="w-16 text-center text-gray-900 dark:text-white bg-gray-400/25 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              v-model.number="graduationYear"
-            />
+            <div class="flex items-center mb-4">
+  <input id="class-of-2028-checkbox" type="checkbox" v-model="isClassOf2028OrLater" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+  <label for="class-of-2028-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Are you part of the Class of 2028 or later?</label>
+</div>
           </div>
 
           <div
@@ -115,16 +110,15 @@
                 :class="
                   courses.length >= 9
                     ? 'cursor-not-allowed opacity-50 bg-red-600 hover:bg-red-600'
-                    : 'bg-sky-600 hover:bg-sky-600 focus:ring-sky-500'
+                    : 'bg-sky-600 hover:bg-sky-700 focus:ring-sky-500'
                 "
-                class="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
+                class="transition-all inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
               >
                 <span class="fill-white relative top-[1px] mr-1" v-show="courses.length < 9"
                   ><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                     <path
                       d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
-                    /></svg
-                ></span>
+                    /></svg></span>
                 {{ courses.length >= 9 ? 'Max 9 courses' : 'Add a course' }}
               </button>
             </div>
@@ -146,6 +140,7 @@
     <SubjectSelectDropdown v-bind="dropdownOptions" @selected="onDropdownSelected" />
   </main>
 </template>
+
 <script setup>
 import Class from './components/Class.vue'
 import TableHead from './components/TableHead.vue'
@@ -170,10 +165,13 @@ const courses = ref(
   ]
 )
 
-const graduationYear = ref(parseInt(localStorage.getItem('graduation-year') ?? 2027))
+const isClassOf2028OrLater = ref(localStorage.getItem('is-class-of-2028-or-later') === 'true')
+const graduationYear = ref(isClassOf2028OrLater.value ? 2028 : 2027)
 
-watch(graduationYear, (newYear) => {
-  localStorage.setItem('graduation-year', newYear.toString())
+watch(isClassOf2028OrLater, (newValue) => {
+  graduationYear.value = newValue ? 2028 : 2027
+  localStorage.setItem('is-class-of-2028-or-later', newValue.toString())
+  localStorage.setItem('graduation-year', graduationYear.value.toString())
 })
 
 function saveCourses() {
