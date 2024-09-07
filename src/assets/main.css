@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@supports not (selector(::-webkit-scrollbar)) {
+  :root {
+    /* not as customizable as ::-webkit-scrollbar-* but better than nothing */
+    scrollbar-color: #62738a #374151;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 20px;
 }

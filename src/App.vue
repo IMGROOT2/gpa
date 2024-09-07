@@ -1,11 +1,11 @@
 <template>
-  <main class="w-full flex items-center justify-center lg:h-screen transition-all">
+  <main class="w-full flex items-center justify-center lg:h-screen transition-all overflow-y-auto">
     <div
       v-if="showWhatsNewModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-10 w-full max-w-2xl relative transition-all"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-10 w-full max-w-2xl relative transition-all max-h-full overflow-y-auto"
       >
         <button
           @click="closeWhatsNewModal"
@@ -82,7 +82,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 w-full max-w-lg relative transition-all"
+        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 w-full max-w-lg relative transition-all max-h-full overflow-y-auto"
       >
         <button
           @click="showModal = false"
@@ -142,12 +142,14 @@
               href="javascript:(()=>{const e=window.location.href;if(e.includes('https://accesscenter.roundrockisd.org/HomeAccess/Home/')){let data=JSON.stringify([].map.call(document.querySelectorAll('[id=average]'),(e,r)=>({courseId:document.querySelector(`tr:nth-child(${r+1}) .sg-5px-margin div span`)?.innerText.match(/\((.+)[A-Z] - \d+\)/)?.[1]||'',average:parseFloat(e.innerText),credits:.5})));navigator.clipboard.writeText(data).then(()=>alert('Grades and courses copied! Go to the GPA Calculator and click on Bookmark 2.'))}else if(e.includes('https://accesscenter.roundrockisd.org/HomeAccess/Grades/Classwork')){const data=[];for(let r=0;r<=8;r++){const t=document.getElementById(`plnMain_rptAssigmnetsByCourse_lblHdrAverage_${r}`);if(t){const n=t.innerText,a=parseFloat(n.replace('AVG ',''));data.push(a)}}const r=document.querySelectorAll('[onclick*=\'OpenClassPopUp\']'),t=[];r.forEach((r,n)=>{const a=r.innerText.match(/\d{4}/)?.[0]||'';a&&void 0!==data[n]&&t.push({courseId:a,average:data[n],credits:.5})});const jsonData=JSON.stringify(t);navigator.clipboard.writeText(jsonData).then(()=>alert('Grades and courses copied to clipboard! Go back to the GPA Calculator and run bookmarklet B2.'))}else alert('This bookmarklet only works on the Home or Classes pages in the Home Access Center.')})();"
               class="w-24 h-24 bg-gradient-to-tr from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white cursor-pointer text-4xl font-extrabold"
               draggable="true"
+              @click.prevent
               >1</a
             >
             <a
               href="javascript:(function(){const e=window.location.href;if(!e.includes('https://gpa.ruhangupta.com')&&!e.includes('http://localhost:5173'))return void alert('This bookmarklet only works on https://gpa.ruhangupta.com or http://localhost:5173');const t=prompt('Paste [CTRL/CMD + V] the copied courses and grades from bookmarklet B1 into this input.');try{const data=JSON.parse(t);if(!Array.isArray(data)||!data.every(e=>e.courseId&&'string'==typeof e.courseId&&!isNaN(e.average)&&!isNaN(e.credits)))return void alert('Uh oh! Your copied data doesn\'t seem right. We can\'t copy over your grades and courses, maybe try again?');localStorage.setItem('saved-courses',t),location.reload()}catch(e){alert('Invalid data format. Please ensure you pasted the correct data that was copied to your clipboard from bookmarklet B1.')}})();"
               class="w-24 h-24 bg-gradient-to-tr from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center text-white cursor-pointer text-4xl font-extrabold"
               draggable="true"
+              @click.prevent
               >2</a
             >
           </div>
@@ -351,7 +353,7 @@
                   {{ animatedWeightedGPA.toFixed(3) }}
                 </p>
 
-                <p class="text-gray-800 dark:text-white text-sm">Weighted GPA</p>
+                <p class="text-gray-800 dark:text-white text-sm w-32">Weighted GPA</p>
               </div>
               <div class="rounded-md shadow-sm p-2 text-center inline-block">
                 <p
@@ -359,7 +361,7 @@
                 >
                   {{ animatedUnweightedGPA.toFixed(3) }}
                 </p>
-                <p class="text-gray-800 dark:text-white text-sm">Unweighted GPA</p>
+                <p class="text-gray-800 dark:text-white text-sm w-32">Unweighted GPA</p>
               </div>
             </div>
           </div>
