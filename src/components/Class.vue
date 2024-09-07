@@ -40,7 +40,7 @@
       </span>
 
       <span
-        class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold bg-purple-100 text-purple-800 rounded-full dark:bg-purple-900 dark:text-purple-300"
+        class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold bg-violet-100 text-violet-800 rounded-full dark:bg-violet-900 dark:text-violet-300"
         title="Weighted (6.0)"
         v-if="course.weighted"
       >

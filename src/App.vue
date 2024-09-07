@@ -118,7 +118,7 @@
           </p>
           <p class="text-gray-700 dark:text-gray-300 mb-4">
             This step-by-step guide will help you import your grades and courses from Home
-            Access Center into the GPA Calculator. All grades and courses are stored in your browser- they never leave your local device.
+            Access Center into the GPA Calculator. <span class="font-bold">All grades and courses are stored in your browser- they never leave your local device.</span> 
           </p>
           <p class="text-gray-700 dark:text-gray-300 mb-4">
             To make it easier, please enable your browser's bookmark bar. You will need to drag
@@ -127,20 +127,19 @@
           </p>
           <button
             @click="nextStep"
-            class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-all"
+            class="w-full px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded transition-all"
           >
             Start!
           </button>
         </div>
         <div v-if="step === 1">
           <p class="text-gray-700 dark:text-gray-300 mb-4">
-            Step 1: Drag each circle up to your browser's bookmark bar. Two new bookmarks, "1" and
-            "2" should be created.
+            <span class="font-bold">Step 1:</span>  Drag each circle up to your browser's bookmark bar to create two new bookmarklets, "1" and "2".
           </p>
           <div class="flex justify-around mb-4">
             <a
               href="javascript:(()=>{const e=window.location.href;if(e.includes('https://accesscenter.roundrockisd.org/HomeAccess/Home/')){let data=JSON.stringify([].map.call(document.querySelectorAll('[id=average]'),(e,r)=>({courseId:document.querySelector(`tr:nth-child(${r+1}) .sg-5px-margin div span`)?.innerText.match(/\((.+)[A-Z] - \d+\)/)?.[1]||'',average:parseFloat(e.innerText),credits:.5})));navigator.clipboard.writeText(data).then(()=>alert('Grades and courses copied! Go to the GPA Calculator and click on Bookmark 2.'))}else if(e.includes('https://accesscenter.roundrockisd.org/HomeAccess/Grades/Classwork')){const data=[];for(let r=0;r<=8;r++){const t=document.getElementById(`plnMain_rptAssigmnetsByCourse_lblHdrAverage_${r}`);if(t){const n=t.innerText,a=parseFloat(n.replace('AVG ',''));data.push(a)}}const r=document.querySelectorAll('[onclick*=\'OpenClassPopUp\']'),t=[];r.forEach((r,n)=>{const a=r.innerText.match(/\d{4}/)?.[0]||'';a&&void 0!==data[n]&&t.push({courseId:a,average:data[n],credits:.5})});const jsonData=JSON.stringify(t);navigator.clipboard.writeText(jsonData).then(()=>alert('Grades and courses copied to clipboard! Go back to the GPA Calculator and run bookmarklet B2.'))}else alert('This bookmarklet only works on the Home or Classes pages in the Home Access Center.')})();"
-              class="w-24 h-24 bg-gradient-to-tr from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white cursor-pointer text-4xl font-extrabold"
+              class="w-24 h-24 bg-gradient-to-tr from-sky-500 to-sky-600 rounded-full flex items-center justify-center text-white cursor-pointer text-4xl font-extrabold"
               draggable="true"
               @click.prevent
               >1</a
@@ -156,7 +155,7 @@
         </div>
         <div v-if="step === 2">
           <p class="text-gray-700 dark:text-gray-300 mb-4">
-            Step 2: Go to
+            <span class="font-bold">Step 2:</span>  Go to
             <a
               href="https://accesscenter.roundrockisd.org/HomeAccess/Home/WeekView"
               target="_blank"
@@ -168,14 +167,14 @@
         </div>
         <div v-if="step === 3">
           <p class="text-gray-700 dark:text-gray-300 mb-4">
-            Step 3: Return to this page and click on Bookmark 2 to import your grades and courses.
+            <span class="font-bold">Step 3:</span> Return to this page and click on Bookmark 2 to import your grades and courses.
           </p>
         </div>
         <div v-if="step > 0" class="flex justify-between mt-4">
           <button
             @click="prevStep"
             :disabled="step === 0"
-            class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded transition-all"
+            class="px-4 py-2 bg-white hover:bg-gray-400 text-gray-800 rounded transition-all"
           >
             Back
           </button>
@@ -200,7 +199,7 @@
     <div class="overflow-x-hidden w-full mx-auto flex items-center justify-center lg:mt-14">
       <div class="relative p-4 w-full lg:max-w-screen-xl h-full md:h-auto">
         <div
-          class="relative p-4 bg-white rounded-lg dark:bg-gray-800 md:p-8 shadow-2xl shadow-[#0d817f]"
+          class="relative p-4 bg-white rounded-lg dark:bg-gray-800 md:p-8 shadow-2xl shadow-cyan-500"
         >
           <div class="flex flex-row justify-between">
             <div class="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
@@ -241,7 +240,7 @@
                   Weighted (6.0)
                 </p>
                 <span
-                  class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold bg-purple-100 text-purple-800 rounded-full dark:bg-purple-900 dark:text-purple-300"
+                  class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold bg-violet-100 text-violet-800 rounded-full dark:bg-violet-900 dark:text-violet-300"
                   title="Weighted (6.0)"
                 >
                   <svg
@@ -271,7 +270,7 @@
                 <a
                   href="https://communityimpact.com/austin/round-rock/education/2024/07/19/round-rock-isd-to-expand-courses-used-to-calculate-class-rankings/"
                   target="_blank"
-                  class="underline hover:text-blue-500 transition-all"
+                  class="underline hover:text-blue-600 transition-all decoration-blue-600"
                 >
                   GPA Changes</a
                 >.
@@ -282,7 +281,7 @@
                 id="class-of-2028-checkbox"
                 type="checkbox"
                 v-model="isClassOf2028OrLater"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                class="w-4 h-4 text-sky-600 bg-gray-100 border-gray-300 rounded focus:ring-sky-500 dark:focus:ring-sky-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
                 for="class-of-2028-checkbox"
@@ -328,7 +327,7 @@
                 "
                 class="transition-all inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
               >
-                <span class="fill-white relative top-[1px] mr-1" v-show="courses.length < 9">
+                <span class="fill-white relative mr-1" v-show="courses.length < 9">
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                     <path
                       d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
@@ -348,7 +347,7 @@
             <div class="flex justify-center">
               <div class="rounded-md shadow-sm mr-2 p-2 text-center inline-block">
                 <p
-                  class="text-4xl bg-gradient-to-tr from-blue-500 to-purple-500 bg-clip-text text-transparent"
+                  class="text-4xl bg-gradient-to-tr from-blue-500 to-violet-500 bg-clip-text text-transparent"
                 >
                   {{ animatedWeightedGPA.toFixed(3) }}
                 </p>
