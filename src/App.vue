@@ -117,8 +117,8 @@
             Import From HAC does not work on school Chromebooks.
           </p>
           <p class="text-gray-700 dark:text-gray-300 mb-4">
-            Welcome! This step-by-step guide will help you import your grades and courses from Home
-            Access Center into the GPA Calculator.
+            This step-by-step guide will help you import your grades and courses from Home
+            Access Center into the GPA Calculator. All grades and courses are stored in your browser- they never leave your local device.
           </p>
           <p class="text-gray-700 dark:text-gray-300 mb-4">
             To make it easier, please enable your browser's bookmark bar. You will need to drag
