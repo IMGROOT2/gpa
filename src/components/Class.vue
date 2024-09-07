@@ -7,7 +7,7 @@
   >
     <th
       scope="row"
-      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+      class="px-6 py-[0.7rem] font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
     >
       {{ course.name }}
 
@@ -77,7 +77,7 @@
         <span class="sr-only">Select course</span>
       </button>
     </th>
-    <td class="px-6 py-4">
+    <td class="px-6 py-[0.7rem]">
       <input
         type="number"
         class="w-12 text-center text-gray-900 dark:text-white bg-gray-400/25 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -88,7 +88,7 @@
         @input="$emit('update:average', $event.target.valueAsNumber)"
       />
     </td>
-    <td class="px-6 py-4 justify-between flex">
+    <td class="px-6 py-[0.7rem] justify-between flex">
       <input
         type="number"
         class="w-12 text-center text-gray-900 dark:text-white bg-gray-400/25 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"

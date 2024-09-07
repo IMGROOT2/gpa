@@ -5,14 +5,14 @@
     <span class="text-sm text-gray-500 text-center dark:text-gray-400"
       >Created by
       <a
-        class="text-gray-600 dark:text-gray-300 hover:underline"
+        class="text-gray-600 dark:text-gray-300 underline hover:text-blue-600 decoration-blue-600 transition-all font-semibold"
         target="_blank"
-        href="https://github.com/IMGROOT2"
+        href="https://ruhangupta.com"
         >Ruhan Gupta</a
       >
       and
       <a
-        class="text-gray-600 dark:text-gray-300 hover:underline"
+        class="text-gray-600 dark:text-gray-300 underline hover:text-blue-600 decoration-blue-600 transition-all font-semibold"
         target="_blank"
         href="https://github.com/grimsteel"
         >Siddhant Kameswar</a
@@ -29,7 +29,7 @@
           xmlns="http://www.w3.org/2000/svg"
           height="1em"
           viewBox="0 0 496 512"
-          class="ml-2 w-4 h-4 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+          class="ml-2 w-4 h-4 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-all"
           fill="currentColor"
         >
           <path
