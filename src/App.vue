@@ -113,7 +113,7 @@
           Import From HAC
         </h2>
         <div v-if="step === 0">
-          <p class="text-gray-700 dark:text-gray-300 mb-4 font-bold">
+          <p class="text-rose-600 mb-4 font-bold">
             Import From HAC does not work on school Chromebooks.
           </p>
           <p class="text-gray-700 dark:text-gray-300 mb-4">
@@ -323,7 +323,7 @@
                 :class="
                   courses.length >= 9
                     ? 'cursor-not-allowed opacity-50 bg-red-600 hover:bg-red-600'
-                    : 'bg-sky-600 hover:bg-sky-700 focus:ring-sky-500'
+                    : 'bg-sky-500 hover:bg-sky-700 focus:ring-sky-500'
                 "
                 class="transition-all inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
               >
@@ -345,7 +345,7 @@
               </button>
             </div>
             <div class="flex justify-center">
-              <div class="rounded-md shadow-sm mr-2 p-2 text-center inline-block">
+              <div class="rounded-md mr-2 p-2 text-center inline-block">
                 <p
                   class="text-4xl bg-gradient-to-tr from-blue-500 to-violet-500 bg-clip-text text-transparent"
                 >
@@ -354,7 +354,7 @@
 
                 <p class="text-gray-800 dark:text-white text-sm w-32">Weighted GPA</p>
               </div>
-              <div class="rounded-md shadow-sm p-2 text-center inline-block">
+              <div class="rounded-md p-2 text-center inline-block">
                 <p
                   class="text-4xl bg-gradient-to-tr from-emerald-500 to-cyan-500 bg-clip-text text-transparent"
                 >

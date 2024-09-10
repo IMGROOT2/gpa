@@ -80,7 +80,7 @@
     <td class="px-6 py-[0.7rem]">
       <input
         type="number"
-        class="w-12 text-center text-gray-900 dark:text-white bg-gray-400/25 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        class="w-12 text-center text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         min="0"
         max="100"
         :value="average"
@@ -91,7 +91,7 @@
     <td class="px-6 py-[0.7rem] justify-between flex">
       <input
         type="number"
-        class="w-12 text-center text-gray-900 dark:text-white bg-gray-400/25 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        class="w-12 text-center text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 rounded-md border-none p-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         min="0.5"
         max="2"
         step="0.25"
@@ -100,7 +100,7 @@
         @input="$emit('update:credits', $event.target.valueAsNumber)"
       />
       <span
-        class="transition-all inline-flex items-center justify-center w-6 h-6 text-sm font-semibold bg-red-100 text-red-800 hover:bg-red-700 dark:hover:bg-red-800 rounded-full dark:bg-red-900 dark:text-red-300 relative top-[5px] ml-4"
+        class="transition-all inline-flex items-center justify-center w-6 h-6 text-sm font-semibold bg-red-100 text-red-800 hover:bg-red-700 dark:hover:bg-rose-800 rounded-full dark:bg-rose-900 dark:text-rose-300 relative top-[5px] ml-4"
         title="Remove course"
         @click="$emit('remove-class')"
       >
