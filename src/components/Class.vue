@@ -8,10 +8,11 @@
     <th
       scope="row"
       class="px-6 py-[0.7rem] font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center"
+      :class="{ 'opacity-75 italic': !course.name }"
     >
-      {{ course.name }}
+      {{ course.name ?? 'Unknown course' }}
 
-      <span class="text-gray-500 dark:text-gray-400 ml-2">#{{ course.courseId }}</span>
+      <span class="text-gray-500 dark:text-gray-400 ml-2 not-italic">#{{ course.courseId }}</span>
 
       <span
         class="inline-flex items-center justify-center w-6 h-6 ml-2 text-sm font-semibold rounded-full"
