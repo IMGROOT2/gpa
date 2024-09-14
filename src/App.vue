@@ -261,10 +261,8 @@
           </div>
 
           <div class="mb-5 lg:mb-8 max-w-xs">
-            <label
-              for="input-graduation-year"
-              class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-              >Graduation Year -
+            <p class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
+              Graduation Year -
               <span class="mb-1 text-xs text-gray-500 dark:text-gray-400">
                 Needed for
                 <a
@@ -274,8 +272,8 @@
                 >
                   GPA Changes</a
                 >.
-              </span></label
-            >
+              </span>
+            </p>
             <div class="flex items-center mb-4">
               <input
                 id="class-of-2028-checkbox"
@@ -347,18 +345,28 @@
             <div class="flex justify-center">
               <div class="rounded-md mr-2 p-2 text-center inline-block">
                 <p
-                  class="text-4xl bg-gradient-to-tr from-blue-500 to-violet-500 bg-clip-text text-transparent"
+                  class="text-4xl bg-gradient-to-tr bg-clip-text text-transparent"
+                  :class="
+                    isNaN(animatedWeightedGPA)
+                      ? 'from-orange-500 to-rose-500'
+                      : 'from-blue-500 to-violet-500'
+                  "
                 >
-                  {{ animatedWeightedGPA.toFixed(3) }}
+                  {{ isNaN(animatedWeightedGPA) ? '–' : animatedWeightedGPA.toFixed(3) }}
                 </p>
 
                 <p class="text-gray-800 dark:text-white text-sm w-32">Weighted GPA</p>
               </div>
               <div class="rounded-md p-2 text-center inline-block">
                 <p
-                  class="text-4xl bg-gradient-to-tr from-emerald-500 to-cyan-500 bg-clip-text text-transparent"
+                  class="text-4xl bg-gradient-to-tr bg-clip-text text-transparent"
+                  :class="
+                    isNaN(animatedUnweightedGPA)
+                      ? 'from-orange-500 to-amber-500'
+                      : 'from-emerald-500 to-cyan-500'
+                  "
                 >
-                  {{ animatedUnweightedGPA.toFixed(3) }}
+                  {{ isNaN(animatedUnweightedGPA) ? '–' : animatedUnweightedGPA.toFixed(3) }}
                 </p>
                 <p class="text-gray-800 dark:text-white text-sm w-32">Unweighted GPA</p>
               </div>
@@ -440,7 +448,7 @@ function closeWhatsNewModal() {
 }
 
 onMounted(() => {
-  if (!localStorage.getItem('hasSeenNewUpdate')) {
+  if (!localStorage.getItem('hasSeenNewUpdate') && import.meta.env.PROD) {
     showWhatsNewModal.value = true
   }
 })
@@ -534,14 +542,15 @@ function easeInOutCubic(t) {
 
 function animateValue(animatedValue, newValue) {
   const duration = 200 // duration of the animation in ms
-  const startValue = animatedValue.value
+  // if animatedValue is NaN the whole thing breaks down so use 0 instead
+  const startValue = animatedValue.value || 0
   const startTime = performance.now()
 
   function updateValue(currentTime) {
     const elapsedTime = currentTime - startTime
     const progress = Math.min(elapsedTime / duration, 1)
     const easedProgress = easeInOutCubic(progress)
-    animatedValue.value = startValue + (newValue - startValue) * easedProgress
+    animatedValue.value = Math.abs(startValue + (newValue - startValue) * easedProgress)
 
     if (progress < 1) {
       requestAnimationFrame(updateValue)
@@ -570,7 +579,6 @@ function onStorage(e) {
 
 function onDropdownSelected(courseId) {
   dropdownOptions.value.hidden = true
-  console.log(courses.value, currentSelectingCourse.value)
   courses.value[currentSelectingCourse.value].courseId = courseId
   currentSelectingCourse.value = -1
   saveCourses()

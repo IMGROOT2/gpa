@@ -1,0 +1,52 @@
+{
+  "name": "RRISD GPA Calculator",
+  "short_name": "GPA",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-192-maskable.png",
+      "purpose": "maskable",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-narrow.png",
+      "sizes": "828x1792",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Example GPA calculation on a mobile device"
+    },
+    {
+      "src": "/images/screenshot-wide.png",
+      "sizes": "2880x1620",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Example GPA calculation"
+    },
+    {
+      "src": "/images/screenshot-narrow-light.png",
+      "sizes": "828x1792",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Example GPA calculation on a mobile device in light mode"
+    },
+    {
+      "src": "/images/screenshot-wide-light.png",
+      "sizes": "2880x1620",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Example GPA calculation in light mode"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#06b6d4",
+  "id": "gpa-calculator",
+  "description": "Calculate and re-calculate your GPA with ease!"
+}
