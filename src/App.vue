@@ -417,10 +417,10 @@ function saveCourses() {
   localStorage.setItem('saved-courses', JSON.stringify(courses.value))
 }
 
-function getGPA(qualityPoints) {
+function getGPA(qualityPoints, courses) {
   return (
     qualityPoints.reduce((prev, current) => prev + current, 0) /
-    relevantCourses.value.reduce((prev, current) => prev + current.credits, 0)
+    courses.reduce((prev, current) => prev + current.credits, 0)
   )
 }
 
@@ -491,14 +491,14 @@ const relevantCourses = computed(() => {
       credits: Math.max(0, credits || 0.5),
       ...processedCourses.value[courseId]
     }))
-    .filter((el) => el.gpa)
 })
 
 const weightedGPA = computed(() => {
-  const qualityPoints = relevantCourses.value.map(
+  const weightedCourses = relevantCourses.value.filter((el) => el.gpa);
+  const qualityPoints = weightedCourses.map(
     (el) => calculateWeightedHonorPoints(el.average, el.weighted) * el.credits
   )
-  return getGPA(qualityPoints)
+  return getGPA(qualityPoints, weightedCourses)
 })
 
 function calculateWeightedHonorPoints(average, advanced) {
@@ -520,7 +520,7 @@ const unweightedGPA = computed(() => {
   const qualityPoints = relevantCourses.value.map(
     (el) => calculateUnweightedHonorPoints(el.average) * el.credits
   )
-  return getGPA(qualityPoints)
+  return getGPA(qualityPoints, relevantCourses.value)
 })
 
 // Reactive variables for animated GPA values
