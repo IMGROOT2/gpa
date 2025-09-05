@@ -317,12 +317,7 @@
               <button
                 type="button"
                 @click="addCourse"
-                :disabled="courses.length >= 9 ? true : false"
-                :class="
-                  courses.length >= 9
-                    ? 'cursor-not-allowed opacity-50 bg-red-600 hover:bg-red-600'
-                    : 'bg-sky-500 hover:bg-sky-700 focus:ring-sky-500'
-                "
+                :class="bg-sky-500 hover:bg-sky-700 focus:ring-sky-500"
                 class="transition-all inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
               >
                 <span class="fill-white relative mr-1" v-show="courses.length < 9">
@@ -332,7 +327,7 @@
                     />
                   </svg>
                 </span>
-                {{ 'Add a course' }}
+                Add a course
               </button>
               <button
                 type="button"
