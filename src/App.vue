@@ -332,7 +332,7 @@
                     />
                   </svg>
                 </span>
-                {{ courses.length >= 9 ? 'Max 9 courses' : 'Add a course' }}
+                {{ 'Add a course' }}
               </button>
               <button
                 type="button"
