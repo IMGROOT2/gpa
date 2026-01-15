@@ -31,15 +31,14 @@
         </h2>
         <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 mb-6 space-y-4">
           <li>
+            <span class="font-bold">Course updates:</span> Up-to-date with courses for the 2026-2027 school year. Includes new weighted class changes.
+          </li>
+          <li>
             <span class="font-bold">Import from HAC:</span> Easily import your grades and courses.
           </li>
           <li>
             <span class="font-bold">UI Improvements:</span> Enhanced user interface for better
             experience.
-          </li>
-          <li>
-            <span class="font-bold">Support for new GPA calculation changes:</span> Updated to
-            reflect the latest GPA calculation methods.
           </li>
         </ul>
 
@@ -317,10 +316,9 @@
               <button
                 type="button"
                 @click="addCourse"
-                :class="bg-sky-500 hover:bg-sky-700 focus:ring-sky-500"
-                class="transition-all inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
+                class="bg-sky-500 hover:bg-sky-700 focus:ring-sky-500 transition-all inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:w-auto sm:flex-shrink-0"
               >
-                <span class="fill-white relative mr-1" v-show="courses.length < 9">
+                <span class="fill-white relative mr-1">
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                     <path
                       d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
@@ -437,13 +435,14 @@ function prevStep() {
 }
 
 const showWhatsNewModal = ref(false)
+const whatsNewVersion = "2026-01-14" 
 function closeWhatsNewModal() {
   showWhatsNewModal.value = false
-  localStorage.setItem('hasSeenNewUpdate', 'true')
+  localStorage.setItem('hasSeenNewUpdate', whatsNewVersion)
 }
 
 onMounted(() => {
-  if (!localStorage.getItem('hasSeenNewUpdate') && import.meta.env.PROD) {
+  if ((localStorage.getItem('hasSeenNewUpdate') !== whatsNewVersion) && import.meta.env.PROD) {
     showWhatsNewModal.value = true
   }
 })
