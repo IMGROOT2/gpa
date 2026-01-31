@@ -213,6 +213,7 @@ program
           const classOf2627 = dom.innerText(row.children[2]).trim() == 'X';
           const classOf28 = dom.innerText(row.children[3]).trim() == 'X';
           const weighted = dom.innerText(row.children[4]).trim() == 'X';
+          const dualCredit = name.toLowerCase().includes("onramps") || name.toLowerCase().includes("dual credit") || name.toLowerCase().includes("dual enrollment");
 
           if (!(classOf2627 || classOf28)) {
             console.warn(`WARNING: Course "${name}" does not count to RRISD GPA but is NCAA approved`);
@@ -246,6 +247,7 @@ program
               course.weighted = weighted;
               course.firstYear = firstYear;
               course.lastYear = lastYear;
+              course.dualCredit = dualCredit;
             } else {
               // This pretty much happens for level III IB of all of the languages
               console.warn(`WARNING: Unknown course "${name}" with id ${id}`);
@@ -254,7 +256,8 @@ program
                 weighted,
                 firstYear,
                 lastYear,
-                gpa: true
+                gpa: true,
+                dualCredit
               };
             }
           }
